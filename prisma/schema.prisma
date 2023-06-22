@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Workers {
+  id Int @id @default(autoincrement())
+  name     String 
+  email    String @unique
+  phone    String
+  password String
+  role     String
+  photo    String
+  detail_worker DetailWorkers?
+  portofolio Portofolios[]
+  experience Experiences[]
+  skill Skills[]
+  hiring Hirings[]
+}
+
+model DetailWorkers {
+  id Int @id @default(autoincrement()) 
+  worker Workers @relation(fields: [worker_id],references: [id])
+  worker_id Int @unique
+  job_desc    String
+  domisili    String
+  temp_kerja  String
+  description String 
+}
+
+model Portofolios {
+  id Int      @id @default(autoincrement())
+  worker      Workers @relation(fields: [worker_id],references: [id])
+  worker_id   Int
+  app_name    String
+  repository  String
+  type        String
+  screen_shot String
+}
+
+model Experiences {
+  id Int       @id @default(autoincrement())
+  worker       Workers @relation(fields: [worker_id],references: [id])
+  worker_id    Int 
+  position     String
+  company_name String
+  start_date   DateTime
+  end_date     DateTime
+  description  String 
+}
+
+model Skills {
+  id Int    @id @default(autoincrement())
+  worker    Workers @relation(fields: [worker_id],references: [id])
+  worker_id Int 
+  name      String
+}
+
+model Recruters{
+  id Int @id @default(autoincrement())
+  name     String 
+  email    String @unique
+  phone    String
+  password String
+  role     String
+  photo    String
+  detail_recruter DetailRexruters?
+  hiring Hirings[]
+}
+
+model DetailRexruters {
+  id Int      @id @default(autoincrement())
+  recruters   Recruters @relation(fields: [recruter_id], references: [id])
+  recruter_id Int @unique
+  division    String
+  city        String
+  instagram   String
+  linkedin    String
+  description String
+}
+
+model Hirings {
+  id Int        @id @default(autoincrement())
+  worker        Workers @relation(fields: [worker_id],references: [id])
+  recruters     Recruters @relation(fields: [recruter_id], references: [id])
+  worker_id     Int
+  recruter_id   Int 
+  hiring_type   String
+  recruter_name String
+  email         String
+  phone         String
+  description   String
+}
