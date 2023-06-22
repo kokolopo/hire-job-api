@@ -9,7 +9,7 @@ dotEnv.config();
 
 const port = 5000;
 
-app.use(cors({ credentials: true }));
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(router);

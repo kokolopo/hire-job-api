@@ -119,6 +119,7 @@ const workerController = {
         orderBy: [{ id: sort }],
         take: parseInt(limit),
         skip: skip,
+        include: { detail_worker: true },
       });
       // total data
       const resultCount = await prisma.workers.count();
@@ -146,7 +147,12 @@ const workerController = {
     try {
       const data = await prisma.workers.findUnique({
         where: { id: parseInt(worker_id) },
-        include: { portofolio: true, experience: true, skill: true },
+        include: {
+          detail_worker: true,
+          portofolio: true,
+          experience: true,
+          skill: true,
+        },
       });
 
       res.status(200).json({ message: `data worker id : ${worker_id}`, data });
