@@ -51,8 +51,8 @@ model Experiences {
   worker_id    Int 
   position     String
   company_name String
-  start_date   DateTime
-  end_date     DateTime
+  start_date   DateTime @db.Date
+  end_date     DateTime @db.Date
   description  String 
 }
 

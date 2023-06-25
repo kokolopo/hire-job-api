@@ -42,19 +42,48 @@ const portofolioController = {
       await prisma.$disconnect();
     }
   },
-  // workerPortofolios: async (req, res) => {
-  //   const {second} = req.params
-  //   try {
+  workerPortofolios: async (req, res) => {
+    const { worker_id } = req.params;
+    try {
+      const data = await prisma.portofolios.findMany({
+        where: { worker_id: worker_id },
+      });
 
-  //   } catch (error) {
-  //     res.status(500).json({
-  //       message: "Something went wrong",
-  //       error,
-  //     });
-  //   } finally {
-  //     await prisma.$disconnect();
-  //   }
-  // },
+      res
+        .status(200)
+        .json({ message: `data portofolios id_worker : ${worker_id}`, data });
+    } catch (error) {
+      res.status(500).json({
+        message: "Something went wrong",
+        error,
+      });
+    } finally {
+      await prisma.$disconnect();
+    }
+  },
+  ownPortofolios: async (req, res) => {
+    const token = req.cookies.accessToken;
+    if (!token) {
+      res.status(400).json({ msg: "g ada accessToken!" });
+      return;
+    }
+    const user = jwt.decode(token, { complete: true });
+
+    try {
+      const data = await prisma.portofolios.findMany({
+        where: { worker_id: parseInt(user.payload.id) },
+      });
+
+      res.status(200).json({ message: `data portofolios`, data });
+    } catch (error) {
+      res.status(500).json({
+        message: "Something went wrong",
+        error,
+      });
+    } finally {
+      await prisma.$disconnect();
+    }
+  },
 };
 
 module.exports = portofolioController;
