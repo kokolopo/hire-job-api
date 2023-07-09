@@ -54,9 +54,10 @@ const recruterController = {
           email: email,
         },
       });
-      if (!user) return res.status(400).json({ msg: "email tidak ditemukan!" });
+      if (!user)
+        return res.status(400).json({ message: "email tidak ditemukan!" });
       const match = await bcrypt.compare(password, user.password);
-      if (!match) return res.status(400).json({ msg: "password salah!" });
+      if (!match) return res.status(400).json({ message: "password salah!" });
 
       const { id, name, role } = user;
       const accessToken = jwt.sign(
