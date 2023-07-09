@@ -4,7 +4,8 @@ const jwt = require("jsonwebtoken");
 
 const recruterController = {
   register: async (req, res) => {
-    const { name, email, phone, password, confPassword } = req.body;
+    const { name, email, company, position, phone, password, confPassword } =
+      req.body;
     if (password !== confPassword)
       return res.status(400).json({ msg: "password invalid" });
 
@@ -23,8 +24,9 @@ const recruterController = {
             "https://cdn.icon-icons.com/icons2/3446/PNG/512/account_profile_user_avatar_icon_219236.png",
           detail_recruter: {
             create: {
+              company: company,
               city: "",
-              division: "",
+              division: position,
               description: "",
               linkedin: "",
               instagram: "",

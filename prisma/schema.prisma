@@ -79,6 +79,7 @@ model DetailRexruters {
   id Int      @id @default(autoincrement())
   recruters   Recruters @relation(fields: [recruter_id], references: [id])
   recruter_id Int @unique
+  company     String @default("null")
   division    String
   city        String
   instagram   String
