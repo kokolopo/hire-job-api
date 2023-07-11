@@ -50,6 +50,12 @@ const workerController = {
         where: {
           email: email,
         },
+        include: {
+          detail_worker: true,
+          portofolio: true,
+          experience: true,
+          skill: true,
+        },
       });
       if (!user) return res.status(400).json({ msg: "email tidak ditemukan!" });
       const match = await bcrypt.compare(password, user.password);
