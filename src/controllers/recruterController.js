@@ -53,6 +53,9 @@ const recruterController = {
         where: {
           email: email,
         },
+        include: {
+          detail_recruter: true,
+        },
       });
       if (!user)
         return res.status(400).json({ message: "email tidak ditemukan!" });
