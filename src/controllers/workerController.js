@@ -124,7 +124,7 @@ const workerController = {
   },
   listWorker: async (req, res) => {
     try {
-      let { page = 1, limit = 3, sort = "desc" } = req.query;
+      let { page = 1, limit = 3, sort = "desc", name = "" } = req.query;
       let skip = (page - 1) * limit;
 
       const data = await prisma.workers.findMany({
@@ -132,6 +132,7 @@ const workerController = {
         take: parseInt(limit),
         skip: skip,
         include: { detail_worker: true },
+        where: { name },
       });
       // total data
       const resultCount = await prisma.workers.count();
