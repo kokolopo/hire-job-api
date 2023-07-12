@@ -37,6 +37,29 @@ const experienceController = {
       await prisma.$disconnect();
     }
   },
+  fetchOwnExperience: async (req, res) => {
+    const token = req.cookies.accessToken;
+    if (!token) {
+      res.status(400).json({ msg: "g ada accessToken!" });
+      return;
+    }
+    const user = jwt.decode(token, { complete: true });
+
+    try {
+      const data = await prisma.experiences.findMany({
+        where: { worker_id: parseInt(user.payload.id) },
+      });
+
+      res.status(200).json({ message: `data pengalaman`, data });
+    } catch (error) {
+      res.status(500).json({
+        message: "Something went wrong",
+        error,
+      });
+    } finally {
+      await prisma.$disconnect();
+    }
+  },
 };
 
 module.exports = experienceController;

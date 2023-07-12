@@ -46,7 +46,7 @@ const portofolioController = {
     const { worker_id } = req.params;
     try {
       const data = await prisma.portofolios.findMany({
-        where: { worker_id: worker_id },
+        where: { worker_id: parseInt(worker_id) },
       });
 
       res
