@@ -18,5 +18,10 @@ portofolio.get(
 );
 
 portofolio.get("/", isWorker, portofolioController.ownPortofolios);
+portofolio.delete(
+  "/:porto_id",
+  isWorker,
+  portofolioController.deletePortofolio
+);
 
 module.exports = portofolio;

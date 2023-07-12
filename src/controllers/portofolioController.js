@@ -42,6 +42,23 @@ const portofolioController = {
       await prisma.$disconnect();
     }
   },
+  deletePortofolio: async (req, res) => {
+    const { porto_id } = req.params;
+    try {
+      await prisma.portofolios.delete({
+        where: { id: parseInt(porto_id) },
+      });
+
+      res.status(200).json({ message: "berhasil dihapus" });
+    } catch (error) {
+      res.status(500).json({
+        message: "Something went wrong",
+        error,
+      });
+    } finally {
+      await prisma.$disconnect();
+    }
+  },
   workerPortofolios: async (req, res) => {
     const { worker_id } = req.params;
     try {
