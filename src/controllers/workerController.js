@@ -132,7 +132,7 @@ const workerController = {
         take: parseInt(limit),
         skip: skip,
         include: { detail_worker: true },
-        where: { name },
+        where: { name: { contains: name } },
       });
       // total data
       const resultCount = await prisma.workers.count();
