@@ -108,7 +108,7 @@ const workerController = {
 
       // NOTE
       await prisma.workers.update({
-        data: { name: "name" },
+        data: { name },
         where: { id: user.payload.id },
       });
 
