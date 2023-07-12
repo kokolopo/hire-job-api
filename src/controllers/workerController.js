@@ -86,7 +86,7 @@ const workerController = {
     }
   },
   editDetail: async (req, res) => {
-    const { job_desc, domisili, temp_kerja, description } = req.body;
+    const { name, job_desc, domisili, temp_kerja, description } = req.body;
 
     const token = req.cookies.accessToken;
     if (!token) {
@@ -104,6 +104,12 @@ const workerController = {
           description,
         },
         where: { worker_id: user.payload.id },
+      });
+
+      // NOTE
+      await prisma.workers.update({
+        data: { name: "name" },
+        where: { id: user.payload.id },
       });
 
       res.status(200).json({ message: "Berhasil diperbaharui", result });
