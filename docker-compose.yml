@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:alpine
+    container_name: postgres-hire
+    hostname: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: hire_job
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  hire-job-api:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hire-job-api
+    depends_on:
+      - postgres
+    ports:
+      - "5000:5000"
+    restart: always
+
+volumes:
+  postgres-data:

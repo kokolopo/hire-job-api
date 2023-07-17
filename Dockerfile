@@ -1,12 +1,19 @@
-FROM node:current-alpine3.18
+FROM node:alpine
 
 WORKDIR /app
 
-COPY package* ./
+COPY package*.json ./
 
-RUN npm i
+# generated prisma files
+COPY prisma ./prisma/
+
+COPY .env ./
 
 COPY . .
+
+RUN npm install
+
+RUN npx prisma generate
 
 EXPOSE 5000
 CMD [ "node", "index"]
